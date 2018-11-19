@@ -88,11 +88,6 @@ func (t *Labhlfsc) Invoke(stub shim.ChaincodeStubInterface) pb.Response {
 			fmt.Println(err)
 			return shim.Error("Failed to write packageBytes data")
 		}
-		err = stub.SetEvent("OrderShippment", packageBytes)
-		if err != nil {
-			fmt.Println(err)
-			return shim.Error("Failed to raise OrderShippment event!!!")
-		}
 		logger.Info(" OrderShippment function, txid: ", stub.GetTxID())
 		return shim.Success([]byte(`{"txid":"` + stub.GetTxID() + `","err":null}`))
 	case "Ship":
@@ -150,12 +145,6 @@ func (t *Labhlfsc) Invoke(stub shim.ChaincodeStubInterface) pb.Response {
 			fmt.Println(err)
 			return shim.Error("Failed to write packageBytes data")
 		}
-		// Submit an event to inform about the status change
-		err = stub.SetEvent("Ship", packageBytes)
-		if err != nil {
-			fmt.Println(err)
-			return shim.Error("Failed to raise ship event!!!")
-		}
 		logger.Info(" shipp function, txid: ", stub.GetTxID())
 		return shim.Success([]byte(`{"txid":"` + stub.GetTxID() + `","err":null}`))
 	case "Acknowledgement":
@@ -204,12 +193,6 @@ func (t *Labhlfsc) Invoke(stub shim.ChaincodeStubInterface) pb.Response {
 		if err != nil {
 			fmt.Println(err)
 			return shim.Error("Failed to write packageBytes data")
-		}
-		// Submit an event to inform about the status change
-		err = stub.SetEvent("Acknowledgement", packageBytes)
-		if err != nil {
-			fmt.Println(err)
-			return shim.Error("Failed to raise Acknowledgement event!!!")
 		}
 		logger.Info(" shipp function, txid: ", stub.GetTxID())
 		return shim.Success([]byte(`{"txid":"` + stub.GetTxID() + `","err":null}`))
